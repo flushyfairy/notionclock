@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>cute clock</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="time">
+
+            <!--seconds-->
+            <div class="circle" style="--clr:#EA62A0">
+                <div class="dots sec_dot"></div>
+                <svg>
+                   <circle cx="120" cy="120" r="120" id="ss"></circle> 
+                </svg>
+            </div>
+
+            <!--minutes-->
+            <div class="circle" style="--clr:#F46B99">
+                <div class="dots min_dot"></div>
+                <svg>
+                   <circle cx="100" cy="100" r="100" id="mm"></circle> 
+                </svg>
+            </div>
+
+            <!--hours-->
+            <div class="circle" style="--clr:#F42D82">
+                <div class="dots hr_dot"></div>
+                <svg>
+                   <circle cx="80" cy="80" r="80" id="hh"></circle> 
+                </svg>
+            </div>
+
+            <div class="timeBx">
+
+                <div id="hours" style="--c:#F42D82;">00</div>
+
+                <div id="minutes" style="--c:#F46B99">00</div>
+
+                <div id="seconds" style="--c:#EA62A0">00</div>
+
+                <div class="ap">
+                    <div id="ampm" style="--cc:#fcd9e9"></div>
+                </div>
+
+            </div>  
+        </div>
+
+        <script>
+
+            setInterval(()=>{
+                let hh = document.getElementById('hh')
+                let mm = document.getElementById('mm')
+                let ss = document.getElementById('ss')
+                //circles
+                
+                let sec_dot = document.querySelector('.sec_dot')
+                let min_dot = document.querySelector('.min_dot')
+                let hr_dot = document.querySelector('.hr_dot')
+                //dots following circles
+
+                let hours = document.getElementById('hours')
+                let minutes = document.getElementById('minutes')
+                let seconds = document.getElementById('seconds')
+                let ampm = document.getElementById('ampm')
+                //digital clock
+
+                let h = new Date().getHours();
+                let m = new Date().getMinutes();
+                let s = new Date().getSeconds()
+
+                //12 hr clock vibes
+                let am = h >= 12 ? "PM" : "AM"
+
+                if (h > 12){
+                    h = h - 12;
+                }
+
+                //zero before single digit
+                h = (h < 10) ? "0" + h : h;
+                m = (m < 10) ? "0" + m : m;
+                s = (s < 10) ? "0" + s : s;
+
+                hours.innerHTML = h; 
+                minutes.innerHTML = m; 
+                seconds.innerHTML = s; 
+                ampm.innerHTML = am;
+
+                hh.style.strokeDashoffset = 510 - (510 * h) / 12;
+                //12 hours
+                mm.style.strokeDashoffset = 630 - (630 * m) / 60;
+                //60 minutes
+                ss.style.strokeDashoffset = 760 - (760 * s) / 60;
+                //60 seconds
+
+                sec_dot.style.transform = `rotateZ(${s * 6}deg)`;
+                min_dot.style.transform = `rotateZ(${m * 6}deg)`;
+                hr_dot.style.transform = `rotateZ(${h * 30}deg)`;
+                //dots follow circles
+
+            })
+
+
+        </script>
+
+    </body>
+</html>
